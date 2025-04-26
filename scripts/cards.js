@@ -1,3 +1,8 @@
+function createCard() {
+    const cardTemp = document.querySelector('#card-template').content;
+    return cardTemp.querySelector('.card').cloneNode(true);
+}
+
 const initialCards = [
     {
       name: "Архыз",
@@ -24,3 +29,13 @@ const initialCards = [
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     }
 ];
+
+const placesList = document.querySelector('.places__list');
+
+initialCards.forEach((card) => {
+    const cardEl = createCard();
+    cardEl.querySelector('.card__title').textContent = card.name;
+    cardEl.querySelector('.card__image').src = card.link;
+    cardEl.querySelector('.card__image').alt = card.alt;
+    placesList.append(cardEl);
+})
