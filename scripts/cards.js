@@ -1,6 +1,25 @@
-function createCard() {
+function createCard(card) {
     const cardTemp = document.querySelector('#card-template').content;
-    return cardTemp.querySelector('.card').cloneNode(true);
+    const cardEl = cardTemp.querySelector('.card').cloneNode(true);
+    const cardImage = cardEl.querySelector('.card__image');
+    const binButton = cardEl.querySelector('.card__delete-button');
+    const likeButton = cardEl.querySelector('.card__like-button');
+
+    cardEl.querySelector('.card__title').textContent = card.name;
+    cardEl.querySelector('.card__image').src = card.link;
+    cardEl.querySelector('.card__image').alt = card.alt;
+    placesList.prepend(cardEl);
+
+    cardImage.addEventListener('click', () => {
+        fillCardPopup(cardEl);
+    });
+    likeButton.addEventListener('click', () => {
+        likeButton.classList.toggle('card__like-button_is-active');
+    });
+
+    binButton.addEventListener('click', () => {
+        likeButton.closest('.card').remove();
+    });
 }
 
 const initialCards = [
@@ -32,10 +51,4 @@ const initialCards = [
 
 const placesList = document.querySelector('.places__list');
 
-initialCards.forEach((card) => {
-    const cardEl = createCard();
-    cardEl.querySelector('.card__title').textContent = card.name;
-    cardEl.querySelector('.card__image').src = card.link;
-    cardEl.querySelector('.card__image').alt = card.alt;
-    placesList.append(cardEl);
-})
+initialCards.reverse().forEach(createCard);
